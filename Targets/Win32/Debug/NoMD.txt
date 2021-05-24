@@ -1,0 +1,72 @@
+  <ItemGroup Condition="'$(Platform)'=='$(cAndroid32ArmPlatform)' Or '$(Platform)'=='$(cAndroid64ArmPlatform)'">
+    <JavaAaptPath Include="$(SDKAaptPath)"/>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='$(cAndroid32ArmPlatform)' Or '$(Platform)'=='$(cAndroid64ArmPlatform)'">
+    <ClassesDexFileName>classes.dex</ClassesDexFileName>
+    <OutputClassesDexDir>@(OutputFile->'%(Rootdir)%(Directory)')</OutputClassesDexDir>
+    <OutputClassesDexPath>$(OutputClassesDexDir)$(ClassesDexFileName)</OutputClassesDexPath>
+
+    <!-- Filter to set system lib config and avoid invalid configurations -->
+    <BDSSysLib Condition="('$(Config)'=='debug') Or ('$(Config)'=='release')">$(BDS)\lib\android\$(Config)\</BDSSysLib>
+    <BDSSysLib Condition="('$(Config)'!='debug') And ('$(Config)'!='release')">$(BDS)\lib\android\release\</BDSSysLib>
+
+    <!-- Default system lib paths (For development only) -->
+    <DefaultBDSLibConfigPathDebug>$(BDS)\lib\$(Platform)\debug\</DefaultBDSLibConfigPathDebug>
+    <DefaultBDSLibConfigPathRelease>$(BDS)\lib\$(Platform)\release\</DefaultBDSLibConfigPathRelease>
+
+    <PredexedJarSuffix>-dexed</PredexedJarSuffix>
+    <JavaDxPath>@(JavaAaptPath->'%(RootDir)%(Directory)')dx.bat</JavaDxPath>
+    <DxCmd>PATH $(JDKPath)\bin;$(PATH) %26 "$(JavaDxPath)" --dex --output=</DxCmd>
+    <DxClassesDexCmd>$(DxCmd)"$(OutputClassesDexPath)"</DxClassesDexCmd>
+  </PropertyGroup>
+
+  <!-- Return all the enabled "dexed" system jar files -->
+  <Target Name="GetPredexedSysJars" Condition="('$(EnabledSysJars)'!='')">
+    <Split Text="$(EnabledSysJars)" Separator=";">
+      <Output ItemName="SysJars" TaskParameter="Output" />
+    </Split>
+
+    <ItemGroup>
+        <!-- Normal case (Lib path exists) -->
+        <_SysJarsLocations Include="$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)" Condition="Exists('$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)')" />
+
+        <!-- Set the library path to DEBUG if RELEASE library does not exists (For development only) -->
+        <_SysJarsLocations Include="$(DefaultBDSLibConfigPathDebug)%(SysJars.FileName)%(SysJars.Extension)"
+            Condition="(!Exists('$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)')) And
+                Exists('$(DefaultBDSLibConfigPathDebug)%(SysJars.FileName)%(SysJars.Extension)') And
+                (!Exists('$(DefaultBDSLibConfigPathRelease)%(SysJars.FileName)%(SysJars.Extension)'))" />
+
+        <!-- Set the library path to RELEASE if DEBUG library does not exists (For development only) -->
+        <_SysJarsLocations Include="$(DefaultBDSLibConfigPathRelease)%(SysJars.FileName)%(SysJars.Extension)"
+            Condition="(!Exists('$(BDSSysLib)%(SysJars.FileName)%(SysJars.Extension)')) And
+            Exists('$(DefaultBDSLibConfigPathRelease)%(SysJars.FileName)%(SysJars.Extension)') And
+            (!Exists('$(DefaultBDSLibConfigPathDebug)%(SysJars.FileName)%(SysJars.Extension)'))" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CreateClassesDexOutputDir" Condition="!Exists('$(OutputClassesDexDir)')">
+    <MakeDir Directories="$(OutputClassesDexDir)"/>
+  </Target>
+
+  <!-- Return all the customized jar files included on the project -->
+  <Target Name="GetProjectJars">
+    <ItemGroup>
+        <_JarsLocations Include="%(JavaReference.FullPath)" Condition="('%(JavaReference.Disabled)'!='True') And ('%(JavaReference.IsSystem)'!='True')">
+            <PredexedJar>$(OutputClassesDexDir)%(JavaReference.Filename)$(PredexedJarSuffix)%(JavaReference.Extension)</PredexedJar>
+        </_JarsLocations>
+    </ItemGroup>
+  </Target>
+
+  <!-- Generate a "dexed" version of the customized jar files if they doesn´t exists -->
+  <Target Name="BuildPredexedJar" DependsOnTargets="GetProjectJars">
+    <Exec Condition="( '@(_JarsLocations)'!='' And !Exists('%(_JarsLocations.PredexedJar)') )"
+        Command='$(DxCmd)"%(_JarsLocations.PredexedJar)" %22%(_JarsLocations.FullPath)%22'/>
+  </Target>
+
+  <!-- Generate the classes.dex file -->
+  <Target Name="BuildClassesDex" DependsOnTargets="CreateClassesDexOutputDir;GetPredexedSysJars;BuildPredexedJar"
+    Condition="('$(Platform)'=='$(cAndroid32ArmPlatform)' Or '$(Platform)'=='$(cAndroid64ArmPlatform)') And (('$(AppType)'=='Application') Or ('$(AppType)'=='Console'))">
+    <Exec Condition="('@(_SysJarsLocations)'!='') Or ('@(_JarsLocations)'!='')"
+        Command="$(DxClassesDexCmd) @(_SysJarsLocations->'%22%(FullPath)%22', ' ') @(_JarsLocations->'%22%(PredexedJar)%22', ' ')"/>
+  </Target>
