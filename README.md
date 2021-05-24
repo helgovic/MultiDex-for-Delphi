@@ -6,7 +6,7 @@ Installation.
 
    You need to have JEDI JCL installed.
 
-   Run Targets.exe in the bin directory as administrator.
+   Run Targets.exe in the Targets\bin directory as administrator.
    Load the addon in Delphi. Build and install.
 
 Use.
