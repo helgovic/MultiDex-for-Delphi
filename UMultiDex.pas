@@ -476,38 +476,6 @@ begin
 
                   end;
 
-               FileLines := TStringList.Create;
-               FileLines.LoadFromFile(ExtractFileDir(GetCurrentProjectFileName) + '\AndroidManifest.template.xml');
-
-               i := 0;
-
-               while (i < FileLines.Count) and (Pos('<application', FileLines[i]) = 0) do
-                  Inc(i);
-
-               Found := False;
-
-               while (i < FileLines.Count) and (Pos('>' ,FileLines[i]) = 0) do
-                  if Pos('android:name="androidx.multidex.MultiDexApplication"', FileLines[i]) > 0
-                  then
-                     begin
-                        Found := True;
-                        Break;
-                     end
-                  else
-                     Inc(i);
-
-               if (not Found) and
-                  (Pos('android:name="androidx.multidex.MultiDexApplication"', FileLines[i]) = 0)
-               then
-                  begin
-                     FileLines[i] := StringReplace(FileLines[i], '>', '', []);
-                     Inc(i);
-                     FileLines.Insert(i, '        android:name="androidx.multidex.MultiDexApplication">');
-                     FileLines.SaveToFile(ExtractFileDir(GetCurrentProjectFileName) + '\AndroidManifest.template.xml');
-                  end;
-
-               FileLines.Free;
-
             end
          else
             begin
@@ -561,42 +529,6 @@ begin
                         end;
 
                   end;
-
-               FileLines := TStringList.Create;
-               FileLines.LoadFromFile(ExtractFileDir(GetCurrentProjectFileName) + '\AndroidManifest.template.xml');
-
-               i := 0;
-
-               while (i < FileLines.Count) and (Pos('<application', FileLines[i]) = 0) do
-                  Inc(i);
-
-               Found := False;
-
-               while (i < FileLines.Count) and (Pos('>' ,FileLines[i]) = 0) do
-                  if Pos('android:name="androidx.multidex.MultiDexApplication"', FileLines[i]) > 0
-                  then
-                     begin
-                        Found := True;
-                        Break;
-                     end
-                  else
-                     Inc(i);
-
-               if (Found) or
-                  (Pos('android:name="androidx.multidex.MultiDexApplication"', FileLines[i]) > 0)
-               then
-                  begin
-
-                     if Pos('>' , FileLines[i]) > 0
-                     then
-                        FileLines[i - 1] := FileLines[i - 1] + '>';
-
-                     FileLines.Delete(i);
-                     FileLines.SaveToFile(ExtractFileDir(GetCurrentProjectFileName) + '\AndroidManifest.template.xml');
-
-                  end;
-
-               FileLines.Free;
 
             end;
 
