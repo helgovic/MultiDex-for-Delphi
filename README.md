@@ -11,7 +11,7 @@ Load the addon in Delphi. Build and install.
 
 USE.
 
-You now have two new items in your project menu:
+You now have three new items in your project menu:
    
 MultiDex: Check to turn on MultiDex for this project.
       
@@ -21,7 +21,11 @@ You only need to run the dex step, when you have added/removed/updated your libs
 Check this item to run dex step. 
 RunDex is reset to false on successfull compile.
 
+D8: Check to use D8 dexer.
+
 If you intend to support Android before version 5.0 (minSDK < 21), you need to do the following.
+
+D8/Multidex is not supported with minsdk < 21.
 
 Add the MultiDex.jar in the MultidexJarPas directory to your project libs.
 Add the AndroidApi.JNI.MultiDex.pas in the MultidexJarPas directory to your mainform uses list.
