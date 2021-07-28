@@ -29,6 +29,7 @@ D8/Multidex is not supported with minsdk < 21.
 
 Add the MultiDex.jar in the MultidexJarPas directory to your project libs.
 Add the AndroidApi.JNI.MultiDex.pas in the MultidexJarPas directory to your mainform uses list.
+Add 'android:name="androidx.multidex.MultiDexApplication"' to your <application entry in your AndroidManifest.template.xml file.
 Add the following statements at the start of your main forms FormCreate procedure.
 
     if TJBuild_VERSION.JavaClass.SDK_INT < 21
