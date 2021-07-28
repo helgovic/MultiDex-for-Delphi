@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.792,=rtl.dcp</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.956,=Jcl.dcp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.104,D:\Deplhi\MultiDexAddOn\UStrUtils.pas=</Transaction>
     <Transaction>1899-12-30 00:00:00.000.114,C:\Users\helgo\OneDrive\Dokumenter\Embarcadero\Studio\Projects\Package1.dproj=D:\Deplhi\MultiDexAddOn\MultiDex.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.792,=rtl.dcp</Transaction>
     <Transaction>1899-12-30 00:00:00.000.430,=D:\Downloads\Delphi\Icons\Uniq\RD.bmp</Transaction>
     <Transaction>1899-12-30 00:00:00.000.177,=D:\Downloads\Delphi\Icons\Uniq\RD.bmp</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.225,D:\Deplhi\MultiDexAddOn\Unit1.pas=D:\Deplhi\MultiDexAddOn\UMultiDex.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.364,D:\Deplhi\MultiDexAddOn\UStrUtils.pas=D:\Deplhi\MultiDexAddOn\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.956,=Jcl.dcp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.527,=D:\Deplhi\MultiDexAddOn\Unit1.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.680,=D:\Deplhi\MultiDexAddOn\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.225,D:\Deplhi\MultiDexAddOn\Unit1.pas=D:\Deplhi\MultiDexAddOn\UMultiDex.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.357,=D:\Downloads\Delphi\Icons\Uniq\D8.bmp</Transaction>
     <Transaction>1899-12-30 00:00:00.000.331,=D:\Downloads\Delphi\Icons\Uniq\MD.bmp</Transaction>
     <Transaction>1899-12-30 00:00:00.000.099,=D:\Downloads\Delphi\Icons\Uniq\MD.bmp</Transaction>
-    <Transaction>2021-05-23 11:18:49.527,=D:\Deplhi\MultiDexAddOn\Unit1.pas</Transaction>
-    <Transaction>2021-05-23 11:19:23.364,D:\Deplhi\MultiDexAddOn\UStrUtils.pas=D:\Deplhi\MultiDexAddOn\Unit1.pas</Transaction>
-    <Transaction>2021-05-23 11:29:05.104,D:\Deplhi\MultiDexAddOn\UStrUtils.pas=</Transaction>
   </Transactions>
 </BorlandProject>

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.982,D:\Deplhi\Targets\Project19.dproj=D:\Deplhi\Targets\Targets.dproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.615,C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Project19.dproj=D:\Deplhi\Targets\Project19.dproj</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.490,C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.dfm=D:\Deplhi\Targets\UFTargets.dfm</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.490,C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.pas=D:\Deplhi\Targets\UFTargets.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.833,=C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.113,=C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.246,=C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.833,=C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.982,D:\Deplhi\Targets\Targets.dproj=D:\Deplhi\Targets\Project19.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.490,D:\Deplhi\Targets\UFTargets.pas=C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.615,D:\Deplhi\Targets\Project19.dproj=C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Project19.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.490,D:\Deplhi\Targets\UFTargets.dfm=C:\Users\Helge\Documents\Embarcadero\Studio\Projects\Unit18.dfm</Transaction>
   </Transactions>
 </BorlandProject>

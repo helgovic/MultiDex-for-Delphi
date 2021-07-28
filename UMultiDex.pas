@@ -16,6 +16,9 @@ type
     FActionMultiDex: TAction;
     FMenuRunDex: TMenuItem;
     FActionRunDex: TAction;
+    FMenuD8: TMenuItem;
+    FActionD8: TAction;
+    procedure MenuD8Execute(Sender: TObject);
   protected
     { Protected declarations }
   public
@@ -274,9 +277,11 @@ begin
 
                      for x := 0 to High(FileList) do
                         begin
+
                            if ExtractFileName(FileList[x]) = 'classes.dex'
                            then
                               Continue;
+
                            ShortName := 'Android\Debug\' + ExtractFileName(FileList[x]);
 
                            LineOut := '                <DeployFile LocalName="' + ShortName + '" Configuration="Debug" Class="File">';
@@ -390,11 +395,12 @@ var
    PlatformConfig: String;
    MultiDex: Boolean;
    RunDex: Boolean;
+   D8: Boolean;
 
 begin
 
-   if (not FileExists(System.SysUtils.GetEnvironmentVariable('BDS') + '\bin\CodeGear.CommonMD.Targets')) and
-      (not FileExists(System.SysUtils.GetEnvironmentVariable('BDS') + '\bin\CodeGear.CommonNM.Targets'))
+   if (not FileExists(System.SysUtils.GetEnvironmentVariable('BDS') + '\bin\CodeGear.CommonMDD8.Targets')) and
+      (not FileExists(System.SysUtils.GetEnvironmentVariable('BDS') + '\bin\CodeGear.CommonNMD8.Targets'))
    then
       begin
          ShowMessage('Target files not found. You have to run Targets.exe, located in the bin directory.');
@@ -413,17 +419,61 @@ begin
             begin
                MultiDex := ReadBool('MultiDexSettings', 'MultiDex', False);
                RunDex := ReadBool('MultiDexSettings', 'RunDex', True);
+               D8 := ReadBool('MultiDexSettings', 'D8', False);
             end;
 
          if MultiDex
          then
             begin
 
-               if FileExists(BDSDir + '\bin\CodeGear.CommonMD.Targets')
+               if D8
                then
                   begin
-                     RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonNM.Targets');
-                     RenameFile(BDSDir + '\bin\CodeGear.CommonMD.Targets', BDSDir + '\bin\CodeGear.Common.Targets');
+
+                     if FileExists(BDSDir + '\bin\CodeGear.CommonMDD8.Targets')
+                     then
+                        begin
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonNMD8.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonNMD8.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonMDDX.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonMDDX.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonNMDX.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonNMDX.Targets');
+
+                           RenameFile(BDSDir + '\bin\CodeGear.CommonMDD8.Targets', BDSDir + '\bin\CodeGear.Common.Targets');
+
+                        end;
+
+                  end
+               else
+                  begin
+
+                     if FileExists(BDSDir + '\bin\CodeGear.CommonMDDX.Targets')
+                     then
+                        begin
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonNMD8.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonNMD8.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonMDD8.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonMDD8.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonNMDX.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonNMDX.Targets');
+
+                           RenameFile(BDSDir + '\bin\CodeGear.CommonMDDX.Targets', BDSDir + '\bin\CodeGear.Common.Targets');
+
+                        end;
+
                   end;
 
                FileLines := TStringList.Create;
@@ -462,11 +512,54 @@ begin
          else
             begin
 
-               if FileExists(BDSDir + '\bin\CodeGear.CommonNM.Targets')
+               if D8
                then
                   begin
-                     RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonMD.Targets');
-                     RenameFile(BDSDir + '\bin\CodeGear.CommonNM.Targets', BDSDir + '\bin\CodeGear.Common.Targets');
+
+                     if FileExists(BDSDir + '\bin\CodeGear.CommonNMD8.Targets')
+                     then
+                        begin
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonMDD8.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonMDD8.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonMDDX.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonMDDX.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonNMD8.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonNMD8.Targets');
+
+                           RenameFile(BDSDir + '\bin\CodeGear.CommonNMD8.Targets', BDSDir + '\bin\CodeGear.Common.Targets');
+
+                        end;
+
+                  end
+               else
+                  begin
+
+                     if FileExists(BDSDir + '\bin\CodeGear.CommonNMDX.Targets')
+                     then
+                        begin
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonNMD8.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonNMD8.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonMDD8.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonMDD8.Targets');
+
+                           if not (FileExists(BDSDir + '\bin\CodeGear.CommonMDDX.Targets'))
+                           then
+                              RenameFile(BDSDir + '\bin\CodeGear.Common.Targets', BDSDir + '\bin\CodeGear.CommonMDDX.Targets');
+
+                           RenameFile(BDSDir + '\bin\CodeGear.CommonNMDX.Targets', BDSDir + '\bin\CodeGear.Common.Targets');
+
+                        end;
+
                   end;
 
                FileLines := TStringList.Create;
@@ -549,16 +642,30 @@ begin
 end;
 
 procedure TMultiDexExpert.MenuMultiDexExecute(Sender: TObject);
+
+var
+   IsOn: Boolean;
+
 begin
 
    with TIniFile.Create(StrBefore('.dproj', GetCurrentProjectFileName) + '.ini') do
       begin
 
-         if FMenuMultiDex.Checked
+         IsOn := ReadBool('MultiDexSettings', 'MultiDex', False);
+
+         if IsOn
          then
-            WriteBool('MultiDexSettings', 'MultiDex', True)
+            begin
+               WriteBool('MultiDexSettings', 'MultiDex', False);
+               FMenuMultiDex.Checked := False;
+               FActionMultiDex.Checked := False;
+            end
          else
-            WriteBool('MultiDexSettings', 'MultiDex', False);
+            begin
+               WriteBool('MultiDexSettings', 'MultiDex', True);
+               FMenuMultiDex.Checked := True;
+               FActionMultiDex.Checked := True;
+            end;
 
          UpdateFile;
 
@@ -566,17 +673,64 @@ begin
 
 end;
 
-procedure TMultiDexExpert.MenuRunDexExecute(Sender: TObject);
+procedure TMultiDexExpert.MenuD8Execute(Sender: TObject);
+
+var
+   IsOn: Boolean;
+
 begin
 
    with TIniFile.Create(StrBefore('.dproj', GetCurrentProjectFileName) + '.ini') do
       begin
 
-         if FMenuRunDex.Checked
+         IsOn := ReadBool('MultiDexSettings', 'D8', False);
+
+         if IsOn
          then
-            WriteBool('MultiDexSettings', 'RunDex', True)
+            begin
+               WriteBool('MultiDexSettings', 'D8', False);
+               FMenuD8.Checked := False;
+               FActionD8.Checked := False;
+            end
          else
-            WriteBool('MultiDexSettings', 'RunDex', False);
+            begin
+               WriteBool('MultiDexSettings', 'D8', True);
+               FMenuD8.Checked := True;
+               FActionD8.Checked := True;
+            end;
+
+         UpdateFile;
+
+      end;
+
+
+end;
+
+procedure TMultiDexExpert.MenuRunDexExecute(Sender: TObject);
+
+var
+   IsOn: Boolean;
+
+begin
+
+   with TIniFile.Create(StrBefore('.dproj', GetCurrentProjectFileName) + '.ini') do
+      begin
+
+         IsOn := ReadBool('MultiDexSettings', 'RunDex', True);
+
+         if IsOn
+         then
+            begin
+               WriteBool('MultiDexSettings', 'RunDex', False);
+               FMenuRunDex.Checked := False;
+               FActionRunDex.Checked := False;
+            end
+         else
+            begin
+               WriteBool('MultiDexSettings', 'RunDex', True);
+               FMenuRunDex.Checked := True;
+               FActionRunDex.Checked := True;
+            end;
 
          UpdateFile;
 
@@ -621,9 +775,9 @@ begin
          FActionMultiDex.Visible := True;
          FActionMultiDex.OnExecute := MenuMultiDexExecute;
          FActionMultiDex.Enabled := True;
-         FActionMultiDex.AutoCheck := True;
+         FActionMultiDex.AutoCheck := False;
          FMenuMultiDex := TMenuItem.Create(nil);
-         FMenuMultiDex.AutoCheck := True;
+         FMenuMultiDex.AutoCheck := False;
          FMenuMultiDex.Name := 'MultiDex';
          FMenuMultiDex.Caption := 'MultiDex';
          FMenuMultiDex.AutoHotkeys := maAutomatic;
@@ -636,8 +790,6 @@ begin
          ImageIndex := NTAServices.AddMasked(Bmp, Bmp.TransparentColor,
                                   'Softmagical RunDex icon');
 
-         Bmp.DisposeOf;
-
          FActionRunDex := TAction.Create(nil);
          FActionRunDex.Category := 'Project';
          FActionRunDex.Caption := 'RunDex';
@@ -646,16 +798,41 @@ begin
          FActionRunDex.Visible := True;
          FActionRunDex.OnExecute := MenuRunDexExecute;
          FActionRunDex.Enabled := True;
-         FActionRunDex.AutoCheck := True;
+         FActionRunDex.AutoCheck := False;
          FMenuRunDex := TMenuItem.Create(nil);
          FMenuRunDex.Name := 'RunDex';
          FMenuRunDex.Caption := 'Run Dex';
          FMenuRunDex.AutoHotkeys := maAutomatic;
-         FMenuRunDex.AutoCheck := True;
+         FMenuRunDex.AutoCheck := False;
          FMenuRunDex.Action := FActionRunDex;
          NTAServices.AddActionMenu(FProjectMenu.Name, FActionRunDex, FMenuRunDex, True);
          FActionRunDex.ImageIndex := ImageIndex;
          FMenuRunDex.ImageIndex := ImageIndex;
+
+         Bmp.LoadFromResourceName(HInstance, 'D816');
+         ImageIndex := NTAServices.AddMasked(Bmp, Bmp.TransparentColor,
+                                  'Softmagical D8 icon');
+
+         Bmp.DisposeOf;
+
+         FActionD8 := TAction.Create(nil);
+         FActionD8.Category := 'Project';
+         FActionD8.Caption := 'Use D8 dexer';
+         FActionD8.Hint := 'Use D8 dexer';
+         FActionD8.Name := 'D8Action';
+         FActionD8.Visible := True;
+         FActionD8.OnExecute := MenuD8Execute;
+         FActionD8.Enabled := True;
+         FActionD8.AutoCheck := False;
+         FMenuD8 := TMenuItem.Create(nil);
+         FMenuD8.Name := 'D8';
+         FMenuD8.Caption := 'Use D8 dexer';
+         FMenuD8.AutoHotkeys := maAutomatic;
+         FMenuD8.AutoCheck := False;
+         FMenuD8.Action := FActionD8;
+         NTAServices.AddActionMenu(FProjectMenu.Name, FActionD8, FMenuD8, True);
+         FActionD8.ImageIndex := ImageIndex;
+         FMenuD8.ImageIndex := ImageIndex;
 
       end;
 
@@ -698,12 +875,26 @@ begin
 
             end;
 
+         if (-1 <> Service.MainMenu.Items.IndexOf(FMenuD8))
+         then
+            Service.MainMenu.Items.Remove(FMenuD8)
+         else
+            begin
+
+               if (-1 <> FProjectMenu.IndexOf(FMenuD8))
+               then
+                  FProjectMenu.Remove(FMenuD8);
+
+            end;
+
       end;
 
    FMenuMultiDex.Free;
    FActionMultiDex.Free;
    FMenuRunDex.Free;
    FActionRunDex.Free;
+   FMenuD8.Free;
+   FActionD8.Free;
 
    (BorlandIDEServices as IOTACompileServices).RemoveNotifier(CompNot);
 
@@ -774,20 +965,19 @@ begin
 
    if NotifyCode = ofnActiveProjectChanged
    then
-      begin
+      with TIniFile.Create(StrBefore('.dproj', GetCurrentProjectFileName) + '.ini') do
+         begin
 
-         with TIniFile.Create(StrBefore('.dproj', GetCurrentProjectFileName) + '.ini') do
-            begin
+            MultiDexExpert.FActionMultiDex.Checked := ReadBool('MultiDexSettings', 'MultiDex', False);
+            MultiDexExpert.FMenuMultiDex.Checked := ReadBool('MultiDexSettings', 'MultiDex', False);
 
-               MultiDexExpert.FActionMultiDex.Checked := ReadBool('MultiDexSettings', 'MultiDex', False);
-               MultiDexExpert.FActionMultiDex.Checked := ReadBool('MultiDexSettings', 'MultiDex', False);
+            MultiDexExpert.FActionRunDex.Checked := ReadBool('MultiDexSettings', 'RunDex', True);
+            MultiDexExpert.FMenuRunDex.Checked := ReadBool('MultiDexSettings', 'RunDex', True);
 
-               MultiDexExpert.FActionRunDex.Checked := ReadBool('MultiDexSettings', 'RunDex', True);
-               MultiDexExpert.FActionRunDex.Checked := ReadBool('MultiDexSettings', 'RunDex', True);
+            MultiDexExpert.FActionD8.Checked := ReadBool('MultiDexSettings', 'D8', False);
+            MultiDexExpert.FMenuD8.Checked := ReadBool('MultiDexSettings', 'D8', False);
 
-            end;
-
-      end;
+         end;
 
 end;
 

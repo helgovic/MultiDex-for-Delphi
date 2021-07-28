@@ -95,22 +95,20 @@ object FTargets: TFTargets
   end
   object BBerlinUI: TButton
     Left = 254
-    Top = 47
+    Top = 52
     Width = 75
     Height = 21
     Caption = 'UnInstall'
     TabOrder = 5
-    Visible = False
     OnClick = BBerlinUIClick
   end
   object BTokioUI: TButton
     Left = 254
-    Top = 79
+    Top = 82
     Width = 75
     Height = 21
     Caption = 'UnInstall'
     TabOrder = 6
-    Visible = False
     OnClick = BTokioUIClick
   end
   object BRioUI: TButton
@@ -120,7 +118,6 @@ object FTargets: TFTargets
     Height = 21
     Caption = 'UnInstall'
     TabOrder = 7
-    Visible = False
     OnClick = BRioUIClick
   end
   object BSydneyUI: TButton
@@ -130,7 +127,6 @@ object FTargets: TFTargets
     Height = 21
     Caption = 'UnInstall'
     TabOrder = 8
-    Visible = False
     OnClick = BSydneyUIClick
   end
   object BClose: TButton
@@ -141,5 +137,41 @@ object FTargets: TFTargets
     Caption = 'Close'
     TabOrder = 9
     OnClick = BCloseClick
+  end
+  object BBerlinUpd: TButton
+    Left = 335
+    Top = 52
+    Width = 75
+    Height = 21
+    Caption = 'Update'
+    TabOrder = 10
+    OnClick = BBerlinUpdClick
+  end
+  object BTokioUpd: TButton
+    Left = 335
+    Top = 82
+    Width = 75
+    Height = 21
+    Caption = 'Update'
+    TabOrder = 11
+    OnClick = BTokioUpdClick
+  end
+  object BUpdRio: TButton
+    Left = 335
+    Top = 109
+    Width = 75
+    Height = 21
+    Caption = 'Update'
+    TabOrder = 12
+    OnClick = BUpdRioClick
+  end
+  object BUpdSydney: TButton
+    Left = 335
+    Top = 140
+    Width = 75
+    Height = 21
+    Caption = 'Update'
+    TabOrder = 13
+    OnClick = BUpdSydneyClick
   end
 end
